@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,4 +19,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+
+//--------------------- Custom Routes ---------------------//
+Route::get('admin/dashboard', [AdminController::class, 'index'])->middleware('role:administrator')->name('admin.dashboard');
+Route::get('user/dashboard', [UserController::class, 'index'])->middleware('role:user')->name('user.dashboard');
+//--------------------- Custom Routes ---------------------//
